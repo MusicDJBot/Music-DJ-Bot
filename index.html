@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music DJ Bot for Discord</title>
+  <meta name="description" content="Play studio tracks inline in Discord text chat or stream ad-free in voice. One-click controls, similarity radio, and playlist support." />
+  <meta property="og:title" content="Music DJ Bot for Discord" />
+  <meta property="og:description" content="Inline Song Cards and ad-free Voice Radio for Discord. Free core discovery, $4–$5 one-time Server Pro unlock." />
+  <meta property="og:image" content="logo.png" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #15181e;
+      --surface-raised: #1c2028;
+      --border: #262b36;
+      --text: #eceef2;
+      --text-muted: #949ba4;
+      --blurple: #5865f2;
+      --blurple-hover: #4752c4;
+      --green: #23a55a;
+      --discord-bg: #313338;
+      --discord-embed: #2b2d31;
+      --discord-btn: #4e5058;
+      --discord-btn-hover: #6d6f78;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    .navbar {
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #15386a;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 0.86rem;
+    }
+
+    .btn-primary {
+      background: var(--blurple);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--blurple-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-raised);
+      border-color: #383f4e;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero p.lead {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      max-width: 480px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hero-meta {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    /* Discord Preview */
+    .discord-window {
+      background: var(--discord-bg);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .discord-bar {
+      background: var(--discord-embed);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .discord-body {
+      padding: 18px;
+    }
+
+    .slash-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #b5bac1;
+      margin-bottom: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .slash-pill code {
+      color: #93c5fd;
+      background: rgba(88, 101, 242, 0.18);
+    }
+
+    .bot-msg-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .bot-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #15386a;
+      object-fit: contain;
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    .bot-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #fff;
+    }
+
+    .bot-tag {
+      background: var(--blurple);
+      color: #fff;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .card-lines {
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: #dbdee1;
+      margin-bottom: 10px;
+      padding-left: 42px;
+    }
+
+    .card-lines strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .card-url {
+      color: #00a8fc;
+      font-size: 0.8rem;
+      word-break: break-all;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .card-url:hover {
+      text-decoration: underline;
+    }
+
+    .yt-embed-mock {
+      margin-left: 42px;
+      background: var(--discord-embed);
+      border-left: 4px solid #ff0000;
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+    }
+
+    .yt-embed-provider {
+      font-size: 0.72rem;
+      color: #b5bac1;
+    }
+
+    .yt-embed-title {
+      font-weight: 600;
+      color: #00a8fc;
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+
+    .yt-player-preview {
+      height: 110px;
+      border-radius: 6px;
+      background: #1e1f22;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .yt-play-icon {
+      width: 42px;
+      height: 30px;
+      background: #ff0000;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+
+    .yt-player-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .discord-buttons {
+      margin-left: 42px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .d-btn {
+      background: var(--discord-btn);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.12s ease;
+    }
+
+    .d-btn:hover {
+      background: var(--discord-btn-hover);
+    }
+
+    .d-btn.active-autoplay {
+      background: var(--green);
+    }
+
+    .sim-hint {
+      margin-left: 42px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Sections */
+    section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-head {
+      margin-bottom: 32px;
+    }
+
+    .section-head h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .feature-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .feature-item h3 {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .feature-item p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Commands Table */
+    .cmd-list {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .cmd-row {
+      display: grid;
+      grid-template-columns: 230px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .cmd-row:last-child {
+      border-bottom: none;
+    }
+
+    .cmd-syntax {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .cmd-desc {
+      color: var(--text-muted);
+    }
+
+    .cmd-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      background: var(--bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.12s ease, border-color 0.12s ease;
+    }
+
+    .cmd-copy:hover {
+      color: var(--text);
+      border-color: #3e4656;
+    }
+
+    .tag-pro {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price-card.pro {
+      border-color: var(--blurple);
+    }
+
+    .price-header {
+      margin-bottom: 20px;
+    }
+
+    .price-tier {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .price-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .price-amount span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .price-list {
+      list-style: none;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .price-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .price-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .price-actions .btn {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .activation-note {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .activation-note strong {
+      color: var(--text);
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    details.faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+    }
+
+    details.faq-item summary {
+      font-weight: 600;
+      font-size: 0.94rem;
+      cursor: pointer;
+    }
+
+    details.faq-item p {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 820px) {
+      .hero-grid,
+      .features-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cmd-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="#" class="brand">
+        <img src="logo.png" alt="" onerror="this.style.display='none'" />
+        <span>Music DJ Bot</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#commands">Commands</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="https://discord.com/oauth2/authorize?client_id=1565796454037979226" target="_blank" rel="noopener">
+        Add to Discord
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Play real music in Discord—inline in chat or live in voice.</h1>
+        <p class="lead">
+          Music DJ Bot posts playable Song Cards directly in your text channels and streams ad-free in voice. Skip tracks, spin up a similar-song radio, or queue playlists without touching a command twice.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1565796454037979226" target="_blank" rel="noopener">
+            Add to Discord
+          </a>
+          <a class="btn btn-secondary" href="#pricing">
+            Unlock Server Pro ($4)
+          </a>
+        </div>
+        <div class="hero-meta">
+          Free forever for chat discovery · One-time $4–$5 per server for Voice &amp; Autoplay
+        </div>
+      </div>
+
+      <div class="discord-window" aria-label="Discord Song Card Preview">
+        <div class="discord-bar">
+          <span># music</span>
+          <span>Interactive Preview</span>
+        </div>
+        <div class="discord-body">
+          <div class="slash-pill" id="sim-command-pill">
+            used <code>/play</code> <span>query: synthwave</span>
+          </div>
+          <div class="bot-msg-header">
+            <img src="logo.png" alt="" class="bot-avatar" onerror="this.style.visibility='hidden'" />
+            <span class="bot-name">MusicDJBot</span>
+            <span class="bot-tag">APP</span>
+          </div>
+          <div class="card-lines">
+            <div><strong>Now Playing:</strong> <span id="sim-now-playing">Synthwave</span></div>
+            <div><strong>Song:</strong> <span id="sim-song">Nightcall</span></div>
+            <div><strong>Artist:</strong> <span id="sim-artist">Kavinsky</span></div>
+            <div><strong>Album:</strong> <span id="sim-album">OutRun</span></div>
+            <a href="https://music.youtube.com/watch?v=MV_3Dpw-BRY" target="_blank" rel="noopener" class="card-url" id="sim-url">
+              https://music.youtube.com/watch?v=MV_3Dpw-BRY
+            </a>
+          </div>
+          <div class="yt-embed-mock">
+            <div class="yt-embed-provider">YouTube Music</div>
+            <div class="yt-embed-title" id="sim-embed-title">Kavinsky - Nightcall (Official Audio)</div>
+            <div class="yt-player-preview">
+              <div class="yt-play-icon">▶</div>
+              <div class="yt-player-caption" id="sim-player-caption">Playable inline in chat or streamed in voice</div>
+            </div>
+          </div>
+          <div class="discord-buttons">
+            <button type="button" class="d-btn" id="btn-sim-next" title="Next Track">⏭️</button>
+            <button type="button" class="d-btn" id="btn-sim-like" title="More Like This">👍</button>
+            <button type="button" class="d-btn" id="btn-sim-random" title="Random Genre">🎲</button>
+            <button type="button" class="d-btn" id="btn-sim-autoplay" title="Toggle Autoplay">📻 <span id="sim-ap-label"></span></button>
+          </div>
+          <div class="sim-hint">
+            Click the buttons above to test the controls.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2>How it works</h2>
+        <p>Built for people who actually listen to music in Discord.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <h3>Text chat or voice channel</h3>
+          <p>Don't force everyone into a voice room just to hear a song. Every track posts an inline player in chat, or run <code>/vplay</code> to stream live for the room.</p>
+        </div>
+        <div class="feature-item">
+          <h3>One-click controls</h3>
+          <p>Every Song Card includes buttons to skip (<code>⏭️</code>), start a similarity radio based on the current track (<code>👍</code>), pick a random genre (<code>🎲</code>), or toggle Autoplay (<code>📻</code>).</p>
+        </div>
+        <div class="feature-item">
+          <h3>Studio tracks only</h3>
+          <p>Automatically blocks YouTube Shorts, livestreams, gaming videos, reaction clips, and 3-hour mixes. Only real songs between 65 seconds and 15 minutes get through.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Pre-loaded skips &amp; playlists</h3>
+          <p>Upcoming tracks resolve in the background while you listen so skipping is instant. Load any YouTube or YouTube Music playlist with <code>/playlist</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="commands">
+    <div class="container">
+      <div class="section-head">
+        <h2>Commands</h2>
+        <p>Type <code>/</code> in Discord to use autocomplete, or click an example to copy.</p>
+      </div>
+      <div class="cmd-list">
+        <div class="cmd-row">
+          <div class="cmd-syntax">/play [query]</div>
+          <div class="cmd-desc">Play top hits (if blank), a genre, <code>Song by Artist</code>, or a YouTube URL</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/play query: synthwave')">/play query: synthwave</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/playlist &lt;url&gt;</div>
+          <div class="cmd-desc">Load a YouTube or YouTube Music playlist with optional shuffle and loop</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/playlist url: https://www.youtube.com/playlist?list=PL4fGSI1pDJn6puJdseH2Rt9sMvt9E2M4i')">Copy example</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/artist &lt;name&gt;</div>
+          <div class="cmd-desc">Play top studio tracks from an artist's catalog</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/artist name: Daft Punk')">/artist name: Daft Punk</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/similar &lt;song&gt; [artist]</div>
+          <div class="cmd-desc">Start a radio station of tracks similar to a song</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/similar song: Nightcall artist: Kavinsky')">/similar song: Nightcall</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/vplay [query] <span class="tag-pro">PRO</span></div>
+          <div class="cmd-desc">Join your voice channel and stream audio immediately</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/vplay query: house')">/vplay query: house</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/voice &lt;action&gt; <span class="tag-pro">PRO</span></div>
+          <div class="cmd-desc">Pause, resume, skip, check the queue, or disconnect from voice</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/voice action: ⏭️ Skip / Next Track')">/voice</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/autoplay [state] <span class="tag-pro">PRO</span></div>
+          <div class="cmd-desc">Automatically advance to the next song when the current track ends</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/autoplay state: On')">/autoplay state: On</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/clear &amp; /help</div>
+          <div class="cmd-desc">Reset the channel's recently played history or view the command guide</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/clear')">/clear</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2>Pricing</h2>
+        <p>Core discovery is free. Server Pro is a one-time unlock for your entire Discord server—no subscriptions.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div>
+            <div class="price-header">
+              <div class="price-tier">Free</div>
+              <div class="price-amount">$0 <span>forever</span></div>
+            </div>
+            <ul class="price-list">
+              <li>Unlimited <code>/play</code>, <code>/playlist</code>, <code>/artist</code>, and <code>/similar</code></li>
+              <li>Inline Song Cards with <code>⏭️ Next</code>, <code>👍 Like</code>, and <code>🎲 Random</code></li>
+              <li>Studio song filtering (blocks Shorts &amp; non-music videos)</li>
+              <li>Works across all text channels in your server</li>
+            </ul>
+          </div>
+          <div class="price-actions">
+            <a class="btn btn-secondary" href="https://discord.com/oauth2/authorize?client_id=1565796454037979226" target="_blank" rel="noopener">
+              Add to Discord
+            </a>
+          </div>
+        </div>
+
+        <div class="price-card pro">
+          <div>
+            <div class="price-header">
+              <div class="price-tier">Server Pro</div>
+              <div class="price-amount">$4 <span>Crypto</span> / $5 <span>Card</span></div>
+            </div>
+            <ul class="price-list">
+              <li>Everything in Free</li>
+              <li>Ad-free Voice Channel Streaming (<code>/vplay</code> &amp; <code>/voice</code>)</li>
+              <li>Hands-free Autoplay Radio (<code>📻</code> &amp; <code>/autoplay</code>)</li>
+              <li>One-time payment unlocks every member and channel in your server</li>
+            </ul>
+          </div>
+          <div class="price-actions">
+            <a class="btn btn-primary" href="https://coinos.io/musicdjbot" target="_blank" rel="noopener">
+              Pay with Crypto ($4)
+            </a>
+            <a class="btn btn-secondary" href="https://ko-fi.com/musicdjbot" target="_blank" rel="noopener">
+              Pay with Card ($5)
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="activation-note">
+        <strong>How to activate Server Pro:</strong> Include your Discord <strong>Server ID</strong> in the payment note on Coinos or Ko-fi. If you don't know your Server ID, click <code>📻</code> or run <code>/vplay</code> in your server and the bot will reply with it privately.
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <h2>FAQ</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Is Server Pro really a one-time payment?</summary>
+          <p>Yes. A single $4 (crypto) or $5 (card/Apple Pay) payment unlocks Voice Streaming and Autoplay for your Discord server permanently. There are no recurring fees.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What YouTube links are supported?</summary>
+          <p>Paste any standard YouTube or YouTube Music song URL into <code>/play</code> or <code>/vplay</code>. The bot checks that it is a real song between 65 seconds and 15 minutes. For full playlists, use <code>/playlist</code>.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I restrict the bot to specific channels?</summary>
+          <p>You can control which channels the bot can access directly inside Discord under <strong>Server Settings → Integrations → Music DJ Bot</strong>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>Music DJ Bot for Discord</div>
+      <div class="footer-links">
+        <a href="https://discord.com/oauth2/authorize?client_id=1565796454037979226" target="_blank" rel="noopener">Add to Discord</a>
+        <a href="#commands">Commands</a>
+        <a href="https://ko-fi.com/musicdjbot" target="_blank" rel="noopener">Ko-fi ($5)</a>
+        <a href="https://coinos.io/musicdjbot" target="_blank" rel="noopener">Crypto ($4)</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const tracks = [
+      {
+        cmd: "used <code>/play</code> <span>query: synthwave</span>",
+        nowPlaying: "Synthwave",
+        song: "Nightcall",
+        artist: "Kavinsky",
+        album: "OutRun",
+        url: "https://music.youtube.com/watch?v=MV_3Dpw-BRY",
+        embedTitle: "Kavinsky - Nightcall (Official Audio)"
+      },
+      {
+        cmd: "clicked <code>⏭️ Next</code>",
+        nowPlaying: "Synthwave",
+        song: "Tech Noir",
+        artist: "GUNSHIP",
+        album: "GUNSHIP",
+        url: "https://music.youtube.com/watch?v=-nC5TBv3sfU",
+        embedTitle: "GUNSHIP - Tech Noir (Official Audio)"
+      },
+      {
+        cmd: "clicked <code>👍 Like</code>",
+        nowPlaying: "Similar to Tech Noir by GUNSHIP",
+        song: "Sunset",
+        artist: "The Midnight",
+        album: "Endless Summer",
+        url: "https://music.youtube.com/watch?v=K4xLi8IF1FM",
+        embedTitle: "The Midnight - Sunset (Official Audio)"
+      },
+      {
+        cmd: "clicked <code>🎲 Random</code>",
+        nowPlaying: "French House",
+        song: "One More Time",
+        artist: "Daft Punk",
+        album: "Discovery",
+        url: "https://music.youtube.com/watch?v=FGBhQbmPwH8",
+        embedTitle: "Daft Punk - One More Time (Official Audio)"
+      }
+    ];
+
+    let curIdx = 0;
+    let autoplayOn = false;
+
+    function renderTrack(item) {
+      document.getElementById("sim-command-pill").innerHTML = item.cmd;
+      document.getElementById("sim-now-playing").textContent = item.nowPlaying;
+      document.getElementById("sim-song").textContent = item.song;
+      document.getElementById("sim-artist").textContent = item.artist;
+      document.getElementById("sim-album").textContent = item.album;
+      const urlEl = document.getElementById("sim-url");
+      urlEl.textContent = item.url;
+      urlEl.href = item.url;
+      document.getElementById("sim-embed-title").textContent = item.embedTitle;
+    }
+
+    document.getElementById("btn-sim-next").addEventListener("click", () => {
+      curIdx = (curIdx + 1) % tracks.length;
+      renderTrack({
+        ...tracks[curIdx],
+        cmd: "clicked <code>⏭️ Next</code>"
+      });
+    });
+
+    document.getElementById("btn-sim-like").addEventListener("click", () => {
+      const cur = tracks[curIdx];
+      curIdx = (curIdx + 1) % tracks.length;
+      const next = tracks[curIdx];
+      renderTrack({
+        ...next,
+        cmd: "clicked <code>👍 Like</code>",
+        nowPlaying: "Similar to " + cur.song + " by " + cur.artist
+      });
+    });
+
+    document.getElementById("btn-sim-random").addEventListener("click", () => {
+      curIdx = (curIdx + 2) % tracks.length;
+      renderTrack({
+        ...tracks[curIdx],
+        cmd: "clicked <code>🎲 Random</code>"
+      });
+    });
+
+    document.getElementById("btn-sim-autoplay").addEventListener("click", () => {
+      autoplayOn = !autoplayOn;
+      const btn = document.getElementById("btn-sim-autoplay");
+      const lbl = document.getElementById("sim-ap-label");
+      const cap = document.getElementById("sim-player-caption");
+      if (autoplayOn) {
+        btn.classList.add("active-autoplay");
+        lbl.textContent = "On";
+        cap.textContent = "Autoplay enabled — next song plays automatically when this track ends";
+      } else {
+        btn.classList.remove("active-autoplay");
+        lbl.textContent = "";
+        cap.textContent = "Playable inline in chat or streamed in voice";
+      }
+    });
+
+    function copyCmd(el, text) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+      }
+      const prev = el.textContent;
+      el.textContent = "Copied";
+      setTimeout(() => { el.textContent = prev; }, 1400);
+    }
+  </script>
+</body>
+</html>
