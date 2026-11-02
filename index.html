@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Music DJ Bot for Discord</title>
-  <meta name="description" content="Play studio tracks inline in Discord text chat or stream ad-free in voice. One-click controls, similarity radio, and playlist support." />
+  <meta name="description" content="Play studio tracks inline in Discord text chat or stream live in voice. One-click controls, similarity radio, and playlist support." />
   <meta property="og:title" content="Music DJ Bot for Discord" />
-  <meta property="og:description" content="Inline Song Cards and ad-free Voice Radio for Discord. Free core discovery, $4–$5 one-time Server Pro unlock." />
+  <meta property="og:description" content="Inline Song Cards and dedicated Voice Radio for Discord. Free core discovery, $4–$5 one-time Server Pro unlock." />
   <meta property="og:image" content="logo.png" />
   <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -269,41 +269,29 @@
       font-weight: 600;
     }
 
-    .card-url {
-      color: #00a8fc;
-      font-size: 0.8rem;
-      word-break: break-all;
-      display: inline-block;
-      margin-top: 4px;
-    }
-
-    .card-url:hover {
-      text-decoration: underline;
-    }
-
-    .yt-embed-mock {
+    .media-embed-mock {
       margin-left: 42px;
       background: var(--discord-embed);
-      border-left: 4px solid #ff0000;
+      border-left: 4px solid var(--blurple);
       border-radius: 4px;
       padding: 10px 12px;
       margin-bottom: 12px;
     }
 
-    .yt-embed-provider {
+    .media-embed-provider {
       font-size: 0.72rem;
       color: #b5bac1;
     }
 
-    .yt-embed-title {
+    .media-embed-title {
       font-weight: 600;
       color: #00a8fc;
       font-size: 0.88rem;
       margin-bottom: 8px;
     }
 
-    .yt-player-preview {
-      height: 110px;
+    .media-player-preview {
+      height: 104px;
       border-radius: 6px;
       background: #1e1f22;
       display: flex;
@@ -314,19 +302,19 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .yt-play-icon {
-      width: 42px;
+    .media-play-icon {
+      width: 40px;
       height: 30px;
-      background: #ff0000;
+      background: var(--blurple);
       border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #fff;
     }
 
-    .yt-player-caption {
+    .media-player-caption {
       font-size: 0.75rem;
       color: var(--text-muted);
     }
@@ -658,7 +646,7 @@
       <div>
         <h1>Play real music in Discord—inline in chat or live in voice.</h1>
         <p class="lead">
-          Music DJ Bot posts playable Song Cards directly in your text channels and streams ad-free in voice. Skip tracks, spin up a similar-song radio, or queue playlists without touching a command twice.
+          Music DJ Bot posts playable Song Cards directly in your text channels and streams live in voice. Skip tracks, spin up a similar-song radio, or queue playlists without touching a command twice.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1565796454037979226" target="_blank" rel="noopener">
@@ -669,7 +657,7 @@
           </a>
         </div>
         <div class="hero-meta">
-          Free forever for chat discovery · One-time $4–$5 per server for Voice &amp; Autoplay
+          Free forever for chat discovery · One-time $4–$5 per server for Voice Hosting &amp; Autoplay
         </div>
       </div>
 
@@ -692,16 +680,13 @@
             <div><strong>Song:</strong> <span id="sim-song">Nightcall</span></div>
             <div><strong>Artist:</strong> <span id="sim-artist">Kavinsky</span></div>
             <div><strong>Album:</strong> <span id="sim-album">OutRun</span></div>
-            <a href="https://music.youtube.com/watch?v=MV_3Dpw-BRY" target="_blank" rel="noopener" class="card-url" id="sim-url">
-              https://music.youtube.com/watch?v=MV_3Dpw-BRY
-            </a>
           </div>
-          <div class="yt-embed-mock">
-            <div class="yt-embed-provider">YouTube Music</div>
-            <div class="yt-embed-title" id="sim-embed-title">Kavinsky - Nightcall (Official Audio)</div>
-            <div class="yt-player-preview">
-              <div class="yt-play-icon">▶</div>
-              <div class="yt-player-caption" id="sim-player-caption">Playable inline in chat or streamed in voice</div>
+          <div class="media-embed-mock">
+            <div class="media-embed-provider">Studio Track Player</div>
+            <div class="media-embed-title" id="sim-embed-title">Kavinsky — Nightcall</div>
+            <div class="media-player-preview">
+              <div class="media-play-icon">▶</div>
+              <div class="media-player-caption" id="sim-player-caption">Playable inline in chat or streamed in voice</div>
             </div>
           </div>
           <div class="discord-buttons">
@@ -722,7 +707,7 @@
     <div class="container">
       <div class="section-head">
         <h2>How it works</h2>
-        <p>Built for people who actually listen to music in Discord.</p>
+        <p>Powered by multi-source music catalog intelligence and built for people who actually listen to music in Discord.</p>
       </div>
       <div class="features-grid">
         <div class="feature-item">
@@ -735,11 +720,11 @@
         </div>
         <div class="feature-item">
           <h3>Studio tracks only</h3>
-          <p>Automatically blocks YouTube Shorts, livestreams, gaming videos, reaction clips, and 3-hour mixes. Only real songs between 65 seconds and 15 minutes get through.</p>
+          <p>Automatically blocks short-form clips (&lt;65s), livestreams, gaming videos, reaction clips, and 3-hour mixes. Only real songs between 65 seconds and 15 minutes get through.</p>
         </div>
         <div class="feature-item">
           <h3>Pre-loaded skips &amp; playlists</h3>
-          <p>Upcoming tracks resolve in the background while you listen so skipping is instant. Load any YouTube or YouTube Music playlist with <code>/playlist</code>.</p>
+          <p>Upcoming tracks resolve in the background while you listen so skipping is instant. Load any supported playlist URL with <code>/playlist</code>.</p>
         </div>
       </div>
     </div>
@@ -754,13 +739,13 @@
       <div class="cmd-list">
         <div class="cmd-row">
           <div class="cmd-syntax">/play [query]</div>
-          <div class="cmd-desc">Play top hits (if blank), a genre, <code>Song by Artist</code>, or a YouTube URL</div>
+          <div class="cmd-desc">Play top hits (if blank), a genre, <code>Song by Artist</code>, or a supported music link</div>
           <button class="cmd-copy" onclick="copyCmd(this, '/play query: synthwave')">/play query: synthwave</button>
         </div>
         <div class="cmd-row">
           <div class="cmd-syntax">/playlist &lt;url&gt;</div>
-          <div class="cmd-desc">Load a YouTube or YouTube Music playlist with optional shuffle and loop</div>
-          <button class="cmd-copy" onclick="copyCmd(this, '/playlist url: https://www.youtube.com/playlist?list=PL4fGSI1pDJn6puJdseH2Rt9sMvt9E2M4i')">Copy example</button>
+          <div class="cmd-desc">Load a supported music playlist URL with optional shuffle and loop</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/playlist url: <playlist-url> shuffle: True')">/playlist</button>
         </div>
         <div class="cmd-row">
           <div class="cmd-syntax">/artist &lt;name&gt;</div>
@@ -800,7 +785,7 @@
     <div class="container">
       <div class="section-head">
         <h2>Pricing</h2>
-        <p>Core discovery is free. Server Pro is a one-time unlock for your entire Discord server—no subscriptions.</p>
+        <p>Core discovery is free. Server Pro covers dedicated voice channel hosting and automated radio for your entire Discord server—one-time payment, no subscriptions.</p>
       </div>
 
       <div class="pricing-grid">
@@ -813,7 +798,7 @@
             <ul class="price-list">
               <li>Unlimited <code>/play</code>, <code>/playlist</code>, <code>/artist</code>, and <code>/similar</code></li>
               <li>Inline Song Cards with <code>⏭️ Next</code>, <code>👍 Like</code>, and <code>🎲 Random</code></li>
-              <li>Studio song filtering (blocks Shorts &amp; non-music videos)</li>
+              <li>Studio song filtering (blocks short-form clips &amp; non-music videos)</li>
               <li>Works across all text channels in your server</li>
             </ul>
           </div>
@@ -832,8 +817,8 @@
             </div>
             <ul class="price-list">
               <li>Everything in Free</li>
-              <li>Ad-free Voice Channel Streaming (<code>/vplay</code> &amp; <code>/voice</code>)</li>
-              <li>Hands-free Autoplay Radio (<code>📻</code> &amp; <code>/autoplay</code>)</li>
+              <li>High-Priority Voice Channel Streaming (<code>/vplay</code> &amp; <code>/voice</code>)</li>
+              <li>Hands-Free Autoplay Radio (<code>📻</code> &amp; <code>/autoplay</code>)</li>
               <li>One-time payment unlocks every member and channel in your server</li>
             </ul>
           </div>
@@ -862,11 +847,11 @@
       <div class="faq-list">
         <details class="faq-item" open>
           <summary>Is Server Pro really a one-time payment?</summary>
-          <p>Yes. A single $4 (crypto) or $5 (card/Apple Pay) payment unlocks Voice Streaming and Autoplay for your Discord server permanently. There are no recurring fees.</p>
+          <p>Yes. A single $4 (crypto) or $5 (card/Apple Pay) payment unlocks dedicated Voice Channel Streaming and Hands-Free Autoplay for your Discord server permanently. There are no recurring fees.</p>
         </details>
         <details class="faq-item">
-          <summary>What YouTube links are supported?</summary>
-          <p>Paste any standard YouTube or YouTube Music song URL into <code>/play</code> or <code>/vplay</code>. The bot checks that it is a real song between 65 seconds and 15 minutes. For full playlists, use <code>/playlist</code>.</p>
+          <summary>What queries and links are supported?</summary>
+          <p>Paste any song name, artist, or supported music link into <code>/play</code> or <code>/vplay</code>. The bot checks that it is a genuine studio track between 65 seconds and 15 minutes. For full playlists, pass a supported playlist URL to <code>/playlist</code>.</p>
         </details>
         <details class="faq-item">
           <summary>How do I restrict the bot to specific channels?</summary>
@@ -896,8 +881,7 @@
         song: "Nightcall",
         artist: "Kavinsky",
         album: "OutRun",
-        url: "https://music.youtube.com/watch?v=MV_3Dpw-BRY",
-        embedTitle: "Kavinsky - Nightcall (Official Audio)"
+        embedTitle: "Kavinsky — Nightcall"
       },
       {
         cmd: "clicked <code>⏭️ Next</code>",
@@ -905,8 +889,7 @@
         song: "Tech Noir",
         artist: "GUNSHIP",
         album: "GUNSHIP",
-        url: "https://music.youtube.com/watch?v=-nC5TBv3sfU",
-        embedTitle: "GUNSHIP - Tech Noir (Official Audio)"
+        embedTitle: "GUNSHIP — Tech Noir"
       },
       {
         cmd: "clicked <code>👍 Like</code>",
@@ -914,8 +897,7 @@
         song: "Sunset",
         artist: "The Midnight",
         album: "Endless Summer",
-        url: "https://music.youtube.com/watch?v=K4xLi8IF1FM",
-        embedTitle: "The Midnight - Sunset (Official Audio)"
+        embedTitle: "The Midnight — Sunset"
       },
       {
         cmd: "clicked <code>🎲 Random</code>",
@@ -923,8 +905,7 @@
         song: "One More Time",
         artist: "Daft Punk",
         album: "Discovery",
-        url: "https://music.youtube.com/watch?v=FGBhQbmPwH8",
-        embedTitle: "Daft Punk - One More Time (Official Audio)"
+        embedTitle: "Daft Punk — One More Time"
       }
     ];
 
@@ -937,9 +918,6 @@
       document.getElementById("sim-song").textContent = item.song;
       document.getElementById("sim-artist").textContent = item.artist;
       document.getElementById("sim-album").textContent = item.album;
-      const urlEl = document.getElementById("sim-url");
-      urlEl.textContent = item.url;
-      urlEl.href = item.url;
       document.getElementById("sim-embed-title").textContent = item.embedTitle;
     }
 
