@@ -187,171 +187,229 @@
 
     /* Discord Preview */
     .discord-window {
-      background: var(--discord-bg);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #1a1a1e;
+      border-radius: 12px;
+      border: 1px solid #2b2d34;
       overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
     }
 
     .discord-bar {
-      background: var(--discord-embed);
+      background: #141417;
       padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      font-size: 0.82rem;
+      border-bottom: 1px solid #26272d;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
     .discord-body {
-      padding: 18px;
+      padding: 18px 20px;
     }
 
-    .slash-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      color: #b5bac1;
-      margin-bottom: 10px;
-      font-family: 'JetBrains Mono', monospace;
+    .discord-msg {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
     }
 
-    .slash-pill code {
-      color: #93c5fd;
-      background: rgba(88, 101, 242, 0.18);
+    .bot-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #15386a;
+      object-fit: contain;
+      padding: 3px;
+      flex-shrink: 0;
     }
 
     .bot-msg-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .bot-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #15386a;
-      object-fit: contain;
-      padding: 2px;
-      flex-shrink: 0;
+      gap: 6px;
+      margin-bottom: 4px;
+      line-height: 1.2;
     }
 
     .bot-name {
       font-weight: 600;
-      font-size: 0.92rem;
-      color: #fff;
+      font-size: 0.95rem;
+      color: #f2f3f5;
     }
 
     .bot-tag {
       background: var(--blurple);
       color: #fff;
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 1px 5px;
-      border-radius: 3px;
+      padding: 2px 5px;
+      border-radius: 4px;
       text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .bot-time {
+      font-size: 0.74rem;
+      color: #949ba4;
+      margin-left: 4px;
+    }
+
+    .autoplay-status {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #f2f3f5;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .autoplay-status.hidden {
+      display: none;
     }
 
     .card-lines {
-      font-size: 0.88rem;
-      line-height: 1.45;
+      font-size: 0.9rem;
+      line-height: 1.48;
       color: #dbdee1;
       margin-bottom: 10px;
-      padding-left: 42px;
     }
 
     .card-lines strong {
-      color: #fff;
-      font-weight: 600;
+      color: #f2f3f5;
+      font-weight: 700;
+    }
+
+    .edited-tag {
+      font-size: 0.68rem;
+      color: #949ba4;
+      margin-left: 4px;
     }
 
     .media-embed-mock {
-      margin-left: 42px;
-      background: var(--discord-embed);
-      border-left: 4px solid var(--blurple);
+      background: #242429;
+      border: 1px solid #323239;
+      border-left: 4px solid #ef4444;
       border-radius: 4px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
+      padding: 12px 14px 14px;
+      margin-bottom: 10px;
+      max-width: 400px;
+      transition: opacity 0.12s ease;
     }
 
     .media-embed-provider {
-      font-size: 0.72rem;
-      color: #b5bac1;
+      font-size: 0.74rem;
+      color: #949ba4;
+      margin-bottom: 3px;
+    }
+
+    .media-embed-author {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #f2f3f5;
+      margin-bottom: 3px;
     }
 
     .media-embed-title {
       font-weight: 600;
       color: #00a8fc;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      margin-bottom: 10px;
     }
 
     .media-player-preview {
-      height: 104px;
+      position: relative;
+      width: 100%;
+      height: 196px;
       border-radius: 6px;
-      background: #1e1f22;
+      overflow: hidden;
+      background: #111214;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .media-play-icon {
-      width: 40px;
-      height: 30px;
-      background: var(--blurple);
-      border-radius: 7px;
-      display: flex;
+    .media-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92);
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .media-player-preview:hover .media-thumb {
+      filter: brightness(1);
+    }
+
+    .media-overlay-pill {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.68);
+      backdrop-filter: blur(4px);
+      border-radius: 999px;
+      height: 44px;
+      padding: 0 18px;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-size: 0.88rem;
+      gap: 12px;
       color: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
     }
 
-    .media-player-caption {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .media-overlay-pill svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      opacity: 0.92;
     }
 
     .discord-buttons {
-      margin-left: 42px;
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
 
     .d-btn {
-      background: var(--discord-btn);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 12px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      background: #2b2d31;
+      color: #f2f3f5;
+      border: 1px solid #393b42;
+      border-radius: 8px;
+      height: 36px;
+      padding: 0 15px;
+      font-size: 0.88rem;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      transition: background 0.12s ease;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.12s ease, transform 0.08s ease;
     }
 
     .d-btn:hover {
-      background: var(--discord-btn-hover);
+      background: #35373c;
+    }
+
+    .d-btn:active {
+      transform: scale(0.97);
     }
 
     .d-btn.active-autoplay {
-      background: var(--green);
+      background: #da373c;
+      border-color: #da373c;
+      color: #fff;
+    }
+
+    .d-btn.active-autoplay:hover {
+      background: #b82d31;
     }
 
     .sim-hint {
-      margin-left: 42px;
-      margin-top: 8px;
+      margin-top: 10px;
       font-size: 0.75rem;
       color: var(--text-muted);
     }
@@ -664,39 +722,53 @@
       <div class="discord-window" aria-label="Discord Song Card Preview">
         <div class="discord-bar">
           <span># music</span>
-          <span>Single Card Mode · Interactive Preview</span>
+          <span>Single Card Mode · Live Preview</span>
         </div>
         <div class="discord-body">
-          <div class="slash-pill" id="sim-command-pill">
-            used <code>/play</code> <span>query: synthwave</span>
-          </div>
-          <div class="bot-msg-header">
+          <div class="discord-msg">
             <img src="logo.png" alt="" class="bot-avatar" onerror="this.style.visibility='hidden'" />
-            <span class="bot-name">MusicDJBot</span>
-            <span class="bot-tag">APP</span>
-          </div>
-          <div class="card-lines">
-            <div><strong>Now Playing:</strong> <span id="sim-now-playing">Synthwave</span></div>
-            <div><strong>Song:</strong> <span id="sim-song">Nightcall</span></div>
-            <div><strong>Artist:</strong> <span id="sim-artist">Kavinsky</span></div>
-            <div><strong>Album:</strong> <span id="sim-album">OutRun</span></div>
-          </div>
-          <div class="media-embed-mock">
-            <div class="media-embed-provider">Studio Track Player</div>
-            <div class="media-embed-title" id="sim-embed-title">Kavinsky — Nightcall</div>
-            <div class="media-player-preview">
-              <div class="media-play-icon">▶</div>
-              <div class="media-player-caption" id="sim-player-caption">Updates in place in chat or streams 256kbps in voice</div>
+            <div>
+              <div class="bot-msg-header">
+                <span class="bot-name">MusicDJBot</span>
+                <span class="bot-tag">APP</span>
+                <span class="bot-time">12:57 PM</span>
+              </div>
+              <div class="autoplay-status" id="sim-autoplay-banner">
+                📻 Autoplay:
+              </div>
+              <div class="card-lines">
+                <div><strong>Now Playing:</strong> <span id="sim-now-playing">80S</span></div>
+                <div><strong>Song:</strong> <span id="sim-song">Heaven Is A Place On Earth</span></div>
+                <div><strong>Artist:</strong> <span id="sim-artist">Belinda Carlisle</span></div>
+                <div><strong>Album:</strong> <span id="sim-album">Best Of</span> <span class="edited-tag">(edited)</span></div>
+              </div>
+              <div class="media-embed-mock" id="sim-embed-card">
+                <div class="media-embed-provider">Studio Track</div>
+                <div class="media-embed-author" id="sim-embed-author">Belinda Carlisle</div>
+                <div class="media-embed-title" id="sim-embed-title">Belinda Carlisle - Heaven Is A Place On Earth (Official Music Video)</div>
+                <div class="media-player-preview">
+                  <img
+                    id="sim-thumb"
+                    class="media-thumb"
+                    src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/48/88/82/48888281-17b1-4fd5-9573-95eb2acb0b9d/06UMGIM07185.rgb.jpg/600x600bb.jpg"
+                    alt="Track artwork"
+                  />
+                  <div class="media-overlay-pill">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="discord-buttons">
+                <button type="button" class="d-btn" id="btn-sim-next" title="Next Track">⏭️</button>
+                <button type="button" class="d-btn" id="btn-sim-like" title="More Like This">👍</button>
+                <button type="button" class="d-btn" id="btn-sim-random" title="Random Genre">🎲</button>
+                <button type="button" class="d-btn active-autoplay" id="btn-sim-autoplay" title="Toggle Autoplay">📻 <span id="sim-ap-label">Autoplay Off</span></button>
+              </div>
+              <div class="sim-hint">
+                Click <code>⏭️</code>, <code>👍</code>, <code>🎲</code>, or <code>📻</code> above—updates in place with zero chat clutter.
+              </div>
             </div>
-          </div>
-          <div class="discord-buttons">
-            <button type="button" class="d-btn" id="btn-sim-next" title="Next Track">⏭️</button>
-            <button type="button" class="d-btn" id="btn-sim-like" title="More Like This">👍</button>
-            <button type="button" class="d-btn" id="btn-sim-random" title="Random Genre">🎲</button>
-            <button type="button" class="d-btn" id="btn-sim-autoplay" title="Toggle Autoplay">📻 <span id="sim-ap-label"></span></button>
-          </div>
-          <div class="sim-hint">
-            Click the buttons above—cards update in place with zero chat clutter.
           </div>
         </div>
       </div>
@@ -904,57 +976,64 @@
   <script>
     const tracks = [
       {
-        cmd: "used <code>/play</code> <span>query: synthwave</span>",
-        nowPlaying: "Synthwave",
-        song: "Nightcall",
-        artist: "Kavinsky",
-        album: "OutRun",
-        embedTitle: "Kavinsky — Nightcall"
+        nowPlaying: "80S",
+        song: "Heaven Is A Place On Earth",
+        artist: "Belinda Carlisle",
+        album: "Best Of",
+        embedAuthor: "Belinda Carlisle",
+        embedTitle: "Belinda Carlisle - Heaven Is A Place On Earth (Official Music Video)",
+        thumb: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/48/88/82/48888281-17b1-4fd5-9573-95eb2acb0b9d/06UMGIM07185.rgb.jpg/600x600bb.jpg"
       },
       {
-        cmd: "clicked <code>⏭️ Next</code>",
-        nowPlaying: "Synthwave",
-        song: "Tech Noir",
-        artist: "GUNSHIP",
-        album: "GUNSHIP",
-        embedTitle: "GUNSHIP — Tech Noir"
+        nowPlaying: "80S",
+        song: "Super Trouper",
+        artist: "ABBA",
+        album: "Abba Gold Anniversary Edition",
+        embedAuthor: "ABBA - Topic",
+        embedTitle: "Super Trouper",
+        thumb: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/03/bb/30/03bb30c3-e87f-d935-3906-2c44d6cc440e/14UMGIM07613.rgb.jpg/600x600bb.jpg"
       },
       {
-        cmd: "clicked <code>👍 Like</code>",
-        nowPlaying: "Similar to Tech Noir by GUNSHIP",
-        song: "Sunset",
-        artist: "The Midnight",
-        album: "Endless Summer",
-        embedTitle: "The Midnight — Sunset"
+        nowPlaying: "80S",
+        song: "Take On Me",
+        artist: "a-ha",
+        album: "Hunting High and Low",
+        embedAuthor: "a-ha - Topic",
+        embedTitle: "Take On Me (Official Studio Track)",
+        thumb: "https://is1-ssl.mzstatic.com/image/thumb/Music/c6/e1/c8/mzi.ixgzfcmc.jpg/600x600bb.jpg"
       },
       {
-        cmd: "clicked <code>🎲 Random</code>",
         nowPlaying: "French House",
         song: "One More Time",
         artist: "Daft Punk",
         album: "Discovery",
-        embedTitle: "Daft Punk — One More Time"
+        embedAuthor: "Daft Punk - Topic",
+        embedTitle: "One More Time",
+        thumb: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fd/4a/77/fd4a77db-0ebc-d043-41a2-f32fa1bb0fb4/dj.qrikkdwj.jpg/600x600bb.jpg"
       }
     ];
 
     let curIdx = 0;
-    let autoplayOn = false;
+    let autoplayOn = true;
 
     function renderTrack(item) {
-      document.getElementById("sim-command-pill").innerHTML = item.cmd;
-      document.getElementById("sim-now-playing").textContent = item.nowPlaying;
-      document.getElementById("sim-song").textContent = item.song;
-      document.getElementById("sim-artist").textContent = item.artist;
-      document.getElementById("sim-album").textContent = item.album;
-      document.getElementById("sim-embed-title").textContent = item.embedTitle;
+      const card = document.getElementById("sim-embed-card");
+      card.style.opacity = "0.55";
+      setTimeout(() => {
+        document.getElementById("sim-now-playing").textContent = item.nowPlaying;
+        document.getElementById("sim-song").textContent = item.song;
+        document.getElementById("sim-artist").textContent = item.artist;
+        document.getElementById("sim-album").textContent = item.album;
+        document.getElementById("sim-embed-author").textContent = item.embedAuthor;
+        document.getElementById("sim-embed-title").textContent = item.embedTitle;
+        document.getElementById("sim-thumb").src = item.thumb;
+        card.style.opacity = "1";
+      }, 90);
     }
 
     document.getElementById("btn-sim-next").addEventListener("click", () => {
       curIdx = (curIdx + 1) % tracks.length;
-      renderTrack({
-        ...tracks[curIdx],
-        cmd: "clicked <code>⏭️ Next</code>"
-      });
+      renderTrack(tracks[curIdx]);
     });
 
     document.getElementById("btn-sim-like").addEventListener("click", () => {
@@ -963,32 +1042,28 @@
       const next = tracks[curIdx];
       renderTrack({
         ...next,
-        cmd: "clicked <code>👍 Like</code>",
         nowPlaying: "Similar to " + cur.song + " by " + cur.artist
       });
     });
 
     document.getElementById("btn-sim-random").addEventListener("click", () => {
       curIdx = (curIdx + 2) % tracks.length;
-      renderTrack({
-        ...tracks[curIdx],
-        cmd: "clicked <code>🎲 Random</code>"
-      });
+      renderTrack(tracks[curIdx]);
     });
 
     document.getElementById("btn-sim-autoplay").addEventListener("click", () => {
       autoplayOn = !autoplayOn;
       const btn = document.getElementById("btn-sim-autoplay");
       const lbl = document.getElementById("sim-ap-label");
-      const cap = document.getElementById("sim-player-caption");
+      const banner = document.getElementById("sim-autoplay-banner");
       if (autoplayOn) {
         btn.classList.add("active-autoplay");
-        lbl.textContent = "On";
-        cap.textContent = "Autoplay enabled — next song updates in place when this track ends";
+        lbl.textContent = "Autoplay Off";
+        banner.classList.remove("hidden");
       } else {
         btn.classList.remove("active-autoplay");
-        lbl.textContent = "";
-        cap.textContent = "Updates in place in chat or streams 256kbps in voice";
+        lbl.textContent = "Autoplay On";
+        banner.classList.add("hidden");
       }
     });
 
