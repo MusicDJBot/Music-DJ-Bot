@@ -20,7 +20,7 @@ Most Discord music bots force everyone into a voice channel just to hear a song,
 
 - 🃏 **Play Directly in Text Chat — Or Stream Live in Voice**: Every track updates a clean, playable **Song Card** right in your channel so members can listen inline at their own pace *or* stream together in Voice.
 - 📌 **Zero Chat Clutter (Single Card Mode by Default)**: By default, new songs update a single active Song Card in place (`/history off`), and all control/status commands reply privately (ephemerally) so your music channel stays spotless. Prefer a scrolling feed of every song played? Toggle `/history state: On` anytime!
-- 🎛️ **One-Click DJ Deck**: Skip tracks (`⏭️`), build a similarity radio station (`👍`), spin the genre wheel (`🎲`), or toggle hands-free Autoplay (`📻`) with a single click—no typing required.
+- 🎛️ **One-Click DJ Deck**: Skip tracks (`⏭️`), save favorites to your Liked Songs library (`❤️`), spin the genre wheel (`🎲`), or toggle hands-free Autoplay (`📻`) with a single click—no typing required.
 - 🧠 **Real Music Discovery**: Powered by multi-source music catalog intelligence. Discover top hits, deep subgenres, full artist catalogs, or songs that sound just like your favorite track.
 - 🛡️ **100% Studio Music Guarantee**: Automatically blocks short-form clips (<65s), livestreams, gaming videos, vlogs, tutorials, reaction videos, AI-generated music spam, and anything over 15 minutes. Only real studio songs get through.
 - 🔊 **Dedicated 256kbps Voice Streaming**: Crystal-clear 256kbps Opus voice channel playback with custom server volume (`/volume`) and automatic track progression.
@@ -53,11 +53,19 @@ Just type `/` in any Discord channel where the bot has access. Many commands inc
 ### 4️⃣ Start a "Similar Songs" Radio Station (`/similar`)
 Love a track's vibe and want more like it?
 - `/similar song: Nightcall artist: Kavinsky`
-- Or simply click the **`👍` (Like)** button under any Song Card in chat!
 
 ### 5️⃣ Load a Music Playlist (`/playlist`)
 Bring your own public or unlisted music playlists into Discord with optional **Shuffle** and **Loop** modes:
 - `/playlist url: <playlist-url> shuffle: True loop: False`
+
+### 6️⃣ Save & Play Liked Songs (`❤️` & `/likes`)
+Build your personal and server-wide **Liked Songs** library right inside Discord:
+- Click **`❤️`** under any Song Card in chat to save it without interrupting the current song (replies privately with a `💔 Remove` button in case you change your mind).
+- Run **`/likes`** to play or manage your collection with optional **Shuffle** and **Loop**:
+  - `▶️ Play My Liked Songs` (`play_mine`) — Stream your personal Liked Songs playlist
+  - `▶️ Play Server Liked Songs` (`play_server`) — Stream a combined mix of every song liked in your server
+  - `📋 View My Liked Songs` / `🌐 View Server Liked Songs` — Browse saved tracks and current storage usage
+  - `➕ Add Song by Search / URL` / `🗑️ Remove a Song` (with instant autocomplete) / `🧹 Clear All`
 
 ---
 
@@ -68,7 +76,7 @@ Every song posted by Music DJ Bot comes with 4 interactive controls underneath t
 | Button | Name | What It Does |
 | :---: | :--- | :--- |
 | **`⏭️`** | **Next Track** | Instantly skips to the next pre-loaded song in your current genre, playlist, artist, or similarity session. |
-| **`👍`** | **Like / More Like This** | Tells the DJ you love this song and switches the session to **Similarity Radio** anchored to that track. |
+| **`❤️`** | **Like (Save to Liked Songs)** | Saves the track to your personal & server **Liked Songs** library without interrupting playback (replies privately with a `💔 Remove` button). |
 | **`🎲`** | **Random Genre** | Spins the wheel and switches to a surprise genre or subgenre playlist. |
 | **`📻`** | **Autoplay** *(Server Pro)* | Automatically posts (and streams in Voice) the next track as soon as the current song finishes. |
 
@@ -100,6 +108,7 @@ Want the bot to join your voice channel and play for everyone in the room?
 | **`/playlist <url> [shuffle] [loop]`** | `/playlist url: <playlist-url>` | Load and play a supported music playlist URL |
 | **`/artist <name>`** | `/artist name: The Weeknd` | Play top studio tracks by a specific artist |
 | **`/similar <song> [artist]`** | `/similar song: Starboy` | Play tracks similar to a song (Similarity Radio) |
+| **`/likes [action] [song] [shuffle] [loop]`** | `/likes action: ▶️ Play My Liked Songs` | Play or manage your personal & server **Liked Songs** playlists (`15/user` & `150/server` Free · `100/user` & `1,000/server` Server Pro) |
 | **`/queue`** | `/queue` | View the channel's Now Playing track and upcoming session queue |
 | **`/autoplay [state] [genre]`** | `/autoplay state: On genre: rock` | Toggle hands-free song-length Autoplay On or Off *(Server Pro)* |
 | **`/vplay [query]`** | `/vplay query: synthwave` | Join your voice channel and immediately stream 256kbps audio *(Server Pro)* |
@@ -113,15 +122,15 @@ Want the bot to join your voice channel and play for everyone in the room?
 
 ## 💎 Server Pro (VIP Unlock) & Donations
 
-**Music DJ Bot's core discovery is 100% Free Forever**—including `/play`, `/playlist`, `/artist`, `/similar`, `/queue`, `/history`, inline Song Cards, `⏭️ Next`, `👍 Like`, and `🎲 Random`.
+**Music DJ Bot's core discovery is 100% Free Forever**—including `/play`, `/playlist`, `/artist`, `/similar`, `/likes` (`15/user` & `150/server`), `/queue`, `/history`, inline Song Cards, `⏭️ Next`, `❤️ Like`, and `🎲 Random`.
 
-To cover dedicated server compute and persistent voice hosting, **Hands-Free Autoplay (`📻`)** and **High-Priority Voice Channel Streaming (`/vplay`, `/voice` & `/volume`)** are **Server Pro** features—unlocked for your **entire Discord server** with a **single one-time payment** (no monthly subscriptions!).
+To cover dedicated server compute and persistent voice hosting, **Hands-Free Autoplay (`📻`)**, **High-Priority Voice Channel Streaming (`/vplay`, `/voice` & `/volume`)**, and **Expanded Liked Songs Storage (`100/user` & `1,000/server`)** are **Server Pro** features—unlocked for your **entire Discord server** with a **single one-time payment** (no monthly subscriptions!).
 
 | Plan | Price | What's Included |
 | :--- | :---: | :--- |
-| **Free Tier** | **$0 Forever** | Unlimited `/play`, `/playlist`, `/artist`, `/similar`, `/queue`, `/history`, inline Song Cards, `⏭️ Next`, `👍 Like`, and `🎲 Random` |
-| **💎 Server Pro (Crypto — 20% Off)** | **$4 One-Time** | Unlocks **Hands-Free Autoplay (`📻`)** + **High-Priority 256kbps Voice Streaming (`/vplay`, `/voice` & `/volume`)** for your entire Discord server |
-| **💎 Server Pro (Card / Apple Pay)** | **$5 One-Time** | Unlocks **Hands-Free Autoplay (`📻`)** + **High-Priority 256kbps Voice Streaming (`/vplay`, `/voice` & `/volume`)** for your entire Discord server |
+| **Free Tier** | **$0 Forever** | Unlimited `/play`, `/playlist`, `/artist`, `/similar`, `/queue`, `/history`, inline Song Cards, `⏭️ Next`, `❤️ Like`, `🎲 Random`, and `/likes` (`15 songs/user` · `150/server`) |
+| **💎 Server Pro (Crypto — 20% Off)** | **$4 One-Time** | Unlocks **Hands-Free Autoplay (`📻`)** + **High-Priority 256kbps Voice Streaming (`/vplay`, `/voice` & `/volume`)** + **Expanded `/likes` (`100 songs/user` · `1,000/server`)** for your entire Discord server |
+| **💎 Server Pro (Card / Apple Pay)** | **$5 One-Time** | Unlocks **Hands-Free Autoplay (`📻`)** + **High-Priority 256kbps Voice Streaming (`/vplay`, `/voice` & `/volume`)** + **Expanded `/likes` (`100 songs/user` · `1,000/server`)** for your entire Discord server |
 
 ### 🔗 Unlock Server Pro or Donate Today:
 - ⚡ **Crypto ($4 — Discounted):** [https://coinos.io/musicdjbot](https://coinos.io/musicdjbot)

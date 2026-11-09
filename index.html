@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Music DJ Bot for Discord</title>
-  <meta name="description" content="Play studio tracks inline in Discord text chat or stream 256kbps audio live in voice. Single Card Mode, one-click controls, similarity radio, and playlist support." />
+  <meta name="description" content="Play studio tracks inline in Discord text chat or stream 256kbps audio live in voice. Single Card Mode, Liked Songs playlists, similarity radio, and one-click controls." />
   <meta property="og:title" content="Music DJ Bot for Discord" />
-  <meta property="og:description" content="Inline Song Cards, zero chat clutter, and 256kbps Voice Radio for Discord. Free core discovery, $4–$5 one-time Server Pro unlock." />
+  <meta property="og:description" content="Inline Song Cards, Liked Songs libraries, zero chat clutter, and 256kbps Voice Radio for Discord. Free core discovery, $4–$5 one-time Server Pro unlock." />
   <meta property="og:image" content="logo.png" />
   <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -408,6 +408,31 @@
       background: #b82d31;
     }
 
+    .ephemeral-toast {
+      margin-top: 10px;
+      background: rgba(88, 101, 242, 0.12);
+      border-left: 3px solid var(--blurple);
+      border-radius: 4px;
+      padding: 7px 10px;
+      font-size: 0.78rem;
+      color: #dbdee1;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      max-width: 400px;
+    }
+
+    .ephemeral-toast.visible {
+      display: flex;
+    }
+
+    .ephemeral-meta {
+      font-size: 0.7rem;
+      color: #949ba4;
+      white-space: nowrap;
+    }
+
     .sim-hint {
       margin-top: 10px;
       font-size: 0.75rem;
@@ -471,7 +496,7 @@
 
     .cmd-row {
       display: grid;
-      grid-template-columns: 240px 1fr auto;
+      grid-template-columns: 260px 1fr auto;
       gap: 16px;
       align-items: center;
       padding: 13px 20px;
@@ -704,7 +729,7 @@
       <div>
         <h1>Play real music in Discord—inline in chat or live in voice.</h1>
         <p class="lead">
-          Music DJ Bot updates a single playable Song Card right in your text channel—keeping chat spotless—and streams 256kbps Opus audio in voice. Skip tracks, spin up a similarity radio, or queue playlists in one click.
+          Music DJ Bot updates a single playable Song Card right in your text channel—keeping chat spotless—and streams 256kbps Opus audio in voice. Skip tracks, save favorites to your Liked Songs library, or queue playlists in one click.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1565796454037979226" target="_blank" rel="noopener">
@@ -715,7 +740,7 @@
           </a>
         </div>
         <div class="hero-meta">
-          Free forever for chat discovery · One-time $4–$5 per server for Voice Hosting &amp; Autoplay
+          Free forever for chat discovery · One-time $4–$5 per server for Voice Hosting, Autoplay &amp; Expanded Likes
         </div>
       </div>
 
@@ -761,12 +786,16 @@
               </div>
               <div class="discord-buttons">
                 <button type="button" class="d-btn" id="btn-sim-next" title="Next Track">⏭️</button>
-                <button type="button" class="d-btn" id="btn-sim-like" title="More Like This">👍</button>
+                <button type="button" class="d-btn" id="btn-sim-like" title="Save to Liked Songs">❤️</button>
                 <button type="button" class="d-btn" id="btn-sim-random" title="Random Genre">🎲</button>
                 <button type="button" class="d-btn active-autoplay" id="btn-sim-autoplay" title="Toggle Autoplay">📻 <span id="sim-ap-label">Autoplay Off</span></button>
               </div>
+              <div class="ephemeral-toast" id="sim-like-toast">
+                <span id="sim-like-text">❤️ Saved to your Liked Songs</span>
+                <span class="ephemeral-meta">Only you can see this</span>
+              </div>
               <div class="sim-hint">
-                Click <code>⏭️</code>, <code>👍</code>, <code>🎲</code>, or <code>📻</code> above—updates in place with zero chat clutter.
+                Click <code>⏭️</code>, <code>❤️</code>, <code>🎲</code>, or <code>📻</code> above—updates in place with zero chat clutter.
               </div>
             </div>
           </div>
@@ -791,20 +820,20 @@
           <p>By default, new songs update a single active Song Card in place and status commands reply privately. Prefer a scrolling history of every song played? Toggle <code>/history state: On</code> anytime.</p>
         </div>
         <div class="feature-item">
+          <h3>Liked Songs library (<code>❤️</code> &amp; <code>/likes</code>)</h3>
+          <p>Click <code>❤️</code> on any Song Card to save it without interrupting playback. Stream your personal favorites or a combined Server Liked Songs mix anytime with <code>/likes</code>.</p>
+        </div>
+        <div class="feature-item">
           <h3>One-click DJ deck</h3>
-          <p>Every Song Card includes buttons to skip (<code>⏭️</code>), start a similarity radio based on the current track (<code>👍</code>), pick a random genre (<code>🎲</code>), or toggle Autoplay (<code>📻</code>).</p>
+          <p>Every Song Card includes buttons to skip (<code>⏭️</code>), save to Liked Songs (<code>❤️</code>), spin a random genre (<code>🎲</code>), or toggle hands-free Autoplay (<code>📻</code>)—plus similarity radio via <code>/similar</code>.</p>
         </div>
         <div class="feature-item">
           <h3>Studio tracks only (no AI spam)</h3>
           <p>Automatically blocks short-form clips (&lt;65s), livestreams, gaming videos, reaction clips, AI-generated music spam, and 3-hour mixes. Only real studio songs (65s–15m) get through.</p>
         </div>
         <div class="feature-item">
-          <h3>Pre-loaded skips &amp; playlists</h3>
-          <p>Upcoming tracks resolve in the background while you listen so skipping is instant. Load playlists with <code>/playlist</code> and inspect upcoming songs anytime with <code>/queue</code>.</p>
-        </div>
-        <div class="feature-item">
-          <h3>Custom server volume</h3>
-          <p>Fine-tune voice channel playback from <code>0%</code> to <code>200%</code> (default <code>85%</code>) using <code>/volume</code>—automatically saved for your server across sessions.</p>
+          <h3>Playlists, queues &amp; server volume</h3>
+          <p>Pre-resolves upcoming tracks for instant skips. Load playlists with <code>/playlist</code>, inspect upcoming tracks with <code>/queue</code>, and save custom server volume (<code>0%–200%</code>) with <code>/volume</code>.</p>
         </div>
       </div>
     </div>
@@ -836,6 +865,11 @@
           <div class="cmd-syntax">/similar &lt;song&gt; [artist]</div>
           <div class="cmd-desc">Start a radio station of tracks similar to a song</div>
           <button class="cmd-copy" onclick="copyCmd(this, '/similar song: Nightcall artist: Kavinsky')">/similar song: Nightcall</button>
+        </div>
+        <div class="cmd-row">
+          <div class="cmd-syntax">/likes [action] [song]</div>
+          <div class="cmd-desc">Play or manage your personal &amp; server Liked Songs playlists with shuffle and loop</div>
+          <button class="cmd-copy" onclick="copyCmd(this, '/likes action: ▶️ Play My Liked Songs')">/likes</button>
         </div>
         <div class="cmd-row">
           <div class="cmd-syntax">/queue</div>
@@ -880,7 +914,7 @@
     <div class="container">
       <div class="section-head">
         <h2>Pricing</h2>
-        <p>Core discovery is free. Server Pro covers dedicated voice channel hosting and automated radio for your entire Discord server—one-time payment, no subscriptions.</p>
+        <p>Core discovery is free. Server Pro covers dedicated voice channel hosting, automated radio, and expanded Liked Songs storage for your entire Discord server—one-time payment, no subscriptions.</p>
       </div>
 
       <div class="pricing-grid">
@@ -892,9 +926,9 @@
             </div>
             <ul class="price-list">
               <li>Unlimited <code>/play</code>, <code>/playlist</code>, <code>/artist</code>, <code>/similar</code>, <code>/queue</code>, and <code>/history</code></li>
-              <li>Single Card Mode (zero chat clutter) with <code>⏭️ Next</code>, <code>👍 Like</code>, and <code>🎲 Random</code></li>
+              <li>Single Card Mode (zero chat clutter) with <code>⏭️ Next</code>, <code>❤️ Like</code>, and <code>🎲 Random</code></li>
+              <li>Personal &amp; Server Liked Songs via <code>/likes</code> (<code>15 songs/user</code> · <code>150/server</code>)</li>
               <li>Studio song filtering (blocks short-form clips, AI music spam &amp; non-music videos)</li>
-              <li>Works across all text channels in your server</li>
             </ul>
           </div>
           <div class="price-actions">
@@ -914,7 +948,7 @@
               <li>Everything in Free</li>
               <li>High-Priority 256kbps Opus Voice Streaming (<code>/vplay</code>, <code>/voice</code> &amp; <code>/volume</code>)</li>
               <li>Hands-Free Autoplay Radio (<code>📻</code> &amp; <code>/autoplay</code>)</li>
-              <li>Custom server volume (<code>0%–200%</code>) saved automatically</li>
+              <li>Expanded <code>/likes</code> Storage (<code>100 songs/user</code> · <code>1,000/server</code>)</li>
               <li>One-time payment unlocks every member and channel in your server</li>
             </ul>
           </div>
@@ -943,7 +977,11 @@
       <div class="faq-list">
         <details class="faq-item" open>
           <summary>Is Server Pro really a one-time payment?</summary>
-          <p>Yes. A single $4 (crypto) or $5 (card/Apple Pay) payment unlocks dedicated Voice Channel Streaming, custom server volume, and Hands-Free Autoplay for your Discord server permanently. There are no recurring fees.</p>
+          <p>Yes. A single $4 (crypto) or $5 (card/Apple Pay) payment unlocks dedicated Voice Channel Streaming, custom server volume, Hands-Free Autoplay, and expanded Liked Songs storage (<code>100/user</code> &amp; <code>1,000/server</code>) for your Discord server permanently. There are no recurring fees.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do Liked Songs (❤️ &amp; /likes) work?</summary>
+          <p>Click <code>❤️</code> under any Song Card to save it to your personal and server Liked Songs library without interrupting playback (the bot replies privately with a <code>💔 Remove</code> button in case you change your mind). Use <code>/likes</code> anytime to stream your personal favorites, play a combined mix of every song liked in your server, or add/remove tracks.</p>
         </details>
         <details class="faq-item">
           <summary>How does Single Card Mode keep chat clean?</summary>
@@ -1015,8 +1053,15 @@
 
     let curIdx = 0;
     let autoplayOn = true;
+    let toastTimer = null;
+
+    function hideToast() {
+      const toast = document.getElementById("sim-like-toast");
+      if (toast) toast.classList.remove("visible");
+    }
 
     function renderTrack(item) {
+      hideToast();
       const card = document.getElementById("sim-embed-card");
       card.style.opacity = "0.55";
       setTimeout(() => {
@@ -1038,12 +1083,12 @@
 
     document.getElementById("btn-sim-like").addEventListener("click", () => {
       const cur = tracks[curIdx];
-      curIdx = (curIdx + 1) % tracks.length;
-      const next = tracks[curIdx];
-      renderTrack({
-        ...next,
-        nowPlaying: "Similar to " + cur.song + " by " + cur.artist
-      });
+      const toast = document.getElementById("sim-like-toast");
+      const text = document.getElementById("sim-like-text");
+      text.textContent = "❤️ Saved \"" + cur.song + "\" to your Liked Songs";
+      toast.classList.add("visible");
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideToast, 3200);
     });
 
     document.getElementById("btn-sim-random").addEventListener("click", () => {
